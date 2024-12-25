@@ -1,66 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Simple Public Witnessing
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introdução
+Este projeto é uma aplicação simples para testemunho público. Siga as instruções abaixo para configurar e iniciar o projeto.
 
-## About Laravel
+## Pré-requisitos
+Certifique-se de ter os seguintes softwares instalados em sua máquina:
+- [Node.js](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Git](https://git-scm.com/)
+- [PHP](https://www.php.net/)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalação
+### Configurando o Git e a conta no GitHub
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Configure seu nome de usuário e e-mail no Git:
+  ```bash
+  git config --global user.name "Seu Nome"
+  git config --global user.email "seu-email@example.com"
+  ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+  ### Autenticando no Git com HTTPS
 
-## Learning Laravel
+  1. Gere um token de acesso pessoal no GitHub:
+    - Vá para [Configurações de Tokens](https://github.com/settings/tokens) no GitHub.
+    - Clique em "Generate new token" (Gerar novo token).
+    - Selecione os escopos necessários e clique em "Generate token" (Gerar token).
+    - Copie o token gerado e guarde-o em um local seguro.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  2. Configure o Git para usar o token de acesso pessoal:
+    - Ao clonar um repositório ou ao realizar operações que exigem autenticação, use o seguinte formato de URL:
+      ```bash
+      https://<seu-token>@github.com/alberttocastro/SPW.git
+      ```
+    - Substitua `<seu-token>` pelo token de acesso pessoal gerado anteriormente.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  3. Salve suas credenciais no cache do Git para evitar digitar o token repetidamente:
+    ```bash
+    git config --global credential.helper cache
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  4. Opcionalmente, você pode definir um tempo limite para o cache das credenciais (em segundos):
+    ```bash
+    git config --global credential.helper 'cache --timeout=3600'
+    ```
 
-## Laravel Sponsors
+  Se tudo estiver configurado corretamente, você verá uma mensagem de sucesso indicando que a autenticação foi realizada com sucesso.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Se tudo estiver configurado corretamente, você verá uma mensagem de sucesso indicando que a autenticação foi realizada com sucesso.
 
-### Premium Partners
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/simplepublicwitnessing.git
+cd simplepublicwitnessing
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 2. Instale as dependências do Node.js
+```bash
+npm install
+```
 
-## Contributing
+### Instalando e configurando o PostgreSQL
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Baixe e instale o PostgreSQL:
+  - No [site oficial](https://www.postgresql.org/download/), escolha a versão adequada para o seu sistema operacional e siga as instruções de instalação.
 
-## Code of Conduct
+2. Após a instalação, inicie o serviço do PostgreSQL:
+  - No Windows, o serviço geralmente é iniciado automaticamente.
+  - No Linux, use o comando:
+    ```bash
+    sudo service postgresql start
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. Acesse o console do PostgreSQL:
+  ```bash
+  sudo -u postgres psql
+  ```
 
-## Security Vulnerabilities
+4. Crie um usuário para o seu projeto:
+  ```sql
+  CREATE USER seu-usuario WITH PASSWORD 'sua-senha';
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. Conceda permissões ao usuário criado:
+  ```sql
+  ALTER USER seu-usuario CREATEDB;
+  ```
 
-## License
+6. Saia do console do PostgreSQL:
+  ```sql
+  \q
+  ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. Configure o banco de dados PostgreSQL
+- Crie um banco de dados no PostgreSQL:
+  ```sql
+  CREATE DATABASE simplepublicwitnessing;
+  ```
+- Configure as credenciais do banco de dados no arquivo `.env`:
+  ```
+  DB_HOST=localhost
+  DB_USER=seu-usuario
+  DB_PASSWORD=sua-senha
+  DB_NAME=simplepublicwitnessing
+  ```
+  ### 4. Execute as migrações do banco de dados
+
+  Para executar as migrações do banco de dados utilizando o Laravel, siga os passos abaixo:
+
+  1. Instale as dependências do PHP e do Laravel:
+    ```bash
+    composer install
+    ```
+
+  2. Configure o arquivo `.env` com as credenciais do banco de dados:
+    ```
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=simplepublicwitnessing
+    DB_USERNAME=seu-usuario
+    DB_PASSWORD=sua-senha
+    ```
+
+  3. Execute as migrações:
+    ```bash
+    php artisan migrate
+    ```
+
+  Se tudo estiver configurado corretamente, as tabelas do banco de dados serão criadas conforme definido nas migrações do Laravel.
+
+## Executando o projeto
+
+### Iniciando o servidor Node.js
+Para iniciar o servidor Node.js, execute o comando:
+```bash
+npm start
+```
+
+### Iniciando o projeto Laravel
+Para iniciar o projeto Laravel, execute o comando:
+```bash
+php artisan serve
+```
+
+O servidor Laravel estará disponível em `http://localhost:8000`.
+
+## Contribuição
+Sinta-se à vontade para contribuir com este projeto. Envie um pull request com suas alterações.
+
+## Licença
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
